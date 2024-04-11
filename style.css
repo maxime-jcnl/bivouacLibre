@@ -1,5 +1,60 @@
-/* Style pour rendre la carte responsive */
+/* Style pour que la carte occupe toute la taille de la fenêtre */
 #maCarte { 
-    height: 400px; 
-    width: 100%; 
+    height: calc(100vh - 10px); /* Ajuste la hauteur pour tenir compte de la bordure */
+    width: calc(100vw - 10px); /* Ajuste la largeur pour tenir compte de la bordure */
+    margin: 0; /* Élimine les marges pour éviter toute barre de défilement inutile */
+    padding: 0; /* Élimine le padding pour que la carte puisse vraiment prendre toute la fenêtre */
+    box-sizing: border-box; /* Assure que les dimensions incluent padding et bordure */
+}
+
+/* Ajoute un contour vert foncé tout autour du site */
+body {
+    margin: 0; /* Supprime la marge par défaut du body pour que la bordure touche les bords de la fenêtre */
+    padding: 5px; /* Ajoute un peu d'espace pour la bordure autour de la carte */
+    box-sizing: border-box; /* Assure que les dimensions incluent padding et bordure */
+    background-color: #004400; /* Couleur de fond pour "étendre" la bordure si la carte ne couvre pas tout */
+}
+.search-container-wrapper {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+}
+
+.search-container {
+    display: flex;
+    background-color: rgb(255, 250, 214); /* Vert foncé avec une transparence */
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+#search-input {
+    flex: 1;
+    padding: 5px 10px;
+    border: none;
+    outline: none;
+    color: #004D40;
+    background-color: transparent;
+    font-size: 16px;
+}
+
+#search-button {
+    padding: 5px 10px;
+    border: none;
+    outline: none;
+    background-color: #004D40; /* Vert Teal foncé */
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#search-button:hover {
+    background-color: #00332A;
+}
+
+#suggestions-container {
+    background-color: white;
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
 }
