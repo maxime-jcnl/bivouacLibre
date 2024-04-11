@@ -4,16 +4,26 @@
     <title>Bivouac Libre</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Lien vers le fichier CSS externe -->
-    <link rel="stylesheet" href="style.css" />
-    <!-- Lien vers le CSS de Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div id="maCarte"></div> <!-- Div pour la carte -->
-    <!-- Script JavaScript externe -->
-    <script src="script.js"></script>
-    <!-- Script Leaflet JS -->
+
+
+    <div class="search-container-wrapper">
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="Rechercher un lieu...">
+            <button id="search-button">🔍</button>
+        </div>
+        <div id="suggestions-container" style="display: none;"></div> <!-- Conteneur pour les suggestions -->
+    </div>
+    
+
+    <div id="maCarte"></div>
+
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="./SmoothWheelZoom.js"></script>
+    <script src="script.js"></script>
+    
 </body>
 </html>
