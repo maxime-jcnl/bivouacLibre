@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
             executeSearch(firstResult.lat, firstResult.lon);
           } else {
             // Vérifier si l'utilisateur a entré des coordonnées GPS
-            var coordinates = query.trim().split(" ").filter((coord) => coord !== ""); // Diviser par espace et supprimer les chaînes vides
+            var coordinates = query.split(",");
             if (coordinates.length === 2 && !isNaN(coordinates[0]) && !isNaN(coordinates[1])) {
               executeSearch(parseFloat(coordinates[1]), parseFloat(coordinates[0]));
             } else {
@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             // Vérifier si l'utilisateur a entré des coordonnées GPS
-            var coordinates = userInput.trim().split(" ").filter((coord) => coord !== ""); // Diviser par espace et supprimer les chaînes vides
+            var coordinates = userInput.split(",");
             if (coordinates.length === 2 && !isNaN(coordinates[0]) && !isNaN(coordinates[1])) {
               var suggestionItem = document.createElement("div");
               suggestionItem.textContent = `Coordonnées GPS : ${coordinates[1]}, ${coordinates[0]}`;
