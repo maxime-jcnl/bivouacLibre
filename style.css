@@ -1,0 +1,5 @@
+/* Style pour rendre la carte responsive */
+#maCarte { 
+    height: 400px; 
+    width: 100%; 
+}
