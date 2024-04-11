@@ -23,24 +23,6 @@ document.addEventListener("DOMContentLoaded", function () {
     currentMarker = L.marker([lat, lon]).addTo(maCarte);
   }
 
-  // Vérifie si un point est à l'intérieur des limites de la France
-  function isInsideFrance(lat, lon) {
-    // Utilise la géométrie point pour créer un objet Turf.js
-    var point = turf.point([lon, lat]);
-    // Utilise la géométrie du pays France pour créer un objet Turf.js
-    var france = turf.featureCollection(franceBoundary.features);
-    // Vérifie si le point est à l'intérieur des limites de la France
-    return turf.booleanPointInPolygon(point, france);
-  }
-
-  // Charger les limites administratives des pays depuis OSM (France)
-  fetch("https://nominatim.openstreetmap.org/search.php?q=France&format=geojson")
-    .then((response) => response.json())
-    .then((data) => {
-      var franceBoundary = data;
-    })
-    .catch((error) => console.error("Erreur lors du chargement des limites administratives de la France :", error));
-
   document
     .getElementById("search-button")
     .addEventListener("click", function () {
@@ -55,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Vérifier si l'utilisateur a entré des coordonnées GPS
             var coordinates = query.trim().split(" ").filter((coord) => coord !== ""); // Diviser par espace et supprimer les chaînes vides
             if (coordinates.length === 2 && !isNaN(coordinates[0]) && !isNaN(coordinates[1])) {
-              executeSearch(parseFloat(coordinates[0]), parseFloat(coordinates[1])); // Inverser l'ordre des coordonnées
+              executeSearch(parseFloat(coordinates[1]), parseFloat(coordinates[0]));
             } else {
               alert("Lieu non trouvé. Veuillez essayer une autre recherche.");
             }
@@ -74,10 +56,15 @@ document.addEventListener("DOMContentLoaded", function () {
           .then((data) => {
             console.log(data); // Pour inspecter les données dans la console
 
-            // Filtrer les résultats pour ne conserver que ceux situés en France (approximativement)
+            // Filtrer les résultats pour ne conserver que ceux situés en France
             var franceResults = data.features.filter((item) => {
-              // Vérifier si les coordonnées se trouvent en France précisément
-              return isInsideFrance(item.geometry.coordinates[1], item.geometry.coordinates[0]);
+              // Vérifier si les coordonnées se trouvent en France (approximativement)
+              return (
+                item.geometry.coordinates[0] > -5.0 &&
+                item.geometry.coordinates[0] < 10.0 &&
+                item.geometry.coordinates[1] > 41.0 &&
+                item.geometry.coordinates[1] < 51.0
+              );
             });
 
             document.getElementById("suggestions-container").innerHTML = "";
@@ -102,12 +89,12 @@ document.addEventListener("DOMContentLoaded", function () {
             var coordinates = userInput.trim().split(" ").filter((coord) => coord !== ""); // Diviser par espace et supprimer les chaînes vides
             if (coordinates.length === 2 && !isNaN(coordinates[0]) && !isNaN(coordinates[1])) {
               var suggestionItem = document.createElement("div");
-              suggestionItem.textContent = `Coordonnées GPS : ${coordinates[0]}, ${coordinates[1]}`; // Inverser l'ordre des coordonnées
+              suggestionItem.textContent = `Coordonnées GPS : ${coordinates[1]}, ${coordinates[0]}`;
               suggestionItem.classList.add("suggestion-item");
               suggestionItem.addEventListener("click", () => {
                 document.getElementById("suggestions-container").style.display =
                   "none";
-                executeSearch(parseFloat(coordinates[0]), parseFloat(coordinates[1]));
+                executeSearch(parseFloat(coordinates[1]), parseFloat(coordinates[0]));
               });
               document
                 .getElementById("suggestions-container")
