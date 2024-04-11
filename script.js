@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Vérifier si l'utilisateur a entré des coordonnées GPS
             var coordinates = query.trim().split(" ").filter((coord) => coord !== ""); // Diviser par espace et supprimer les chaînes vides
             if (coordinates.length === 2 && !isNaN(coordinates[0]) && !isNaN(coordinates[1])) {
-              executeSearch(parseFloat(coordinates[1]), parseFloat(coordinates[0]));
+              executeSearch(parseFloat(coordinates[0]), parseFloat(coordinates[1])); // Inverser l'ordre des coordonnées
             } else {
               alert("Lieu non trouvé. Veuillez essayer une autre recherche.");
             }
@@ -89,12 +89,12 @@ document.addEventListener("DOMContentLoaded", function () {
             var coordinates = userInput.trim().split(" ").filter((coord) => coord !== ""); // Diviser par espace et supprimer les chaînes vides
             if (coordinates.length === 2 && !isNaN(coordinates[0]) && !isNaN(coordinates[1])) {
               var suggestionItem = document.createElement("div");
-              suggestionItem.textContent = `Coordonnées GPS : ${coordinates[1]}, ${coordinates[0]}`;
+              suggestionItem.textContent = `Coordonnées GPS : ${coordinates[0]}, ${coordinates[1]}`; // Inverser l'ordre des coordonnées
               suggestionItem.classList.add("suggestion-item");
               suggestionItem.addEventListener("click", () => {
                 document.getElementById("suggestions-container").style.display =
                   "none";
-                executeSearch(parseFloat(coordinates[1]), parseFloat(coordinates[0]));
+                executeSearch(parseFloat(coordinates[0]), parseFloat(coordinates[1]));
               });
               document
                 .getElementById("suggestions-container")
